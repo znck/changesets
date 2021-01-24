@@ -67,6 +67,7 @@ const getOptionalInput = (name: string) => core.getInput(name) || undefined;
       return;
     }
     case hasChangesets:
+      console.log(`Run version and create PR`)
       await runVersion({
         script: getOptionalInput("version"),
         githubToken,

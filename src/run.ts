@@ -166,6 +166,7 @@ export async function runVersion({
   commitMessage = "Version Packages",
   hasPublishScript = false,
 }: VersionOptions) {
+  console.log(`Running: ${script}`)
   let repo = `${github.context.repo.owner}/${github.context.repo.repo}`;
   let branch = github.context.ref.replace("refs/heads/", "");
   let versionBranch = `changeset-release/${branch}`;
@@ -181,17 +182,7 @@ export async function runVersion({
     let [versionCommand, ...versionArgs] = script.split(/\s+/);
     await exec(versionCommand, versionArgs, { cwd });
   } else {
-    let changesetsCliPkgJson = await require(path.join(
-      cwd,
-      "node_modules",
-      "@changesets",
-      "cli",
-      "package.json"
-    ));
-    let cmd = semver.lt(changesetsCliPkgJson.version, "2.0.0")
-      ? "bump"
-      : "version";
-    await exec("node", ["./node_modules/@changesets/cli/bin.js", cmd], { cwd });
+    await exec("npm", ["run", "release"], { cwd });
   }
 
   let searchQuery = `repo:${repo}+state:open+head:${versionBranch}+base:${branch}`;

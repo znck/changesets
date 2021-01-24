@@ -12,7 +12,7 @@
     "typescript": "^3.5.3"
   },
   "scripts": {
-    "build": "parcel build ./src/index.ts --target=node --no-minify --bundle-node-modules",
+    "build": "parcel build ./src/index.ts --target=node --no-source-maps --no-minify --bundle-node-modules",
     "test": "jest",
     "test:watch": "yarn test --watch"
   },
